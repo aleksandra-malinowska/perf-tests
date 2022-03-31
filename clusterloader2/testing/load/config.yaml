@@ -136,6 +136,17 @@ steps:
     params:
       action: start
 
+- name: start chaos monkey
+  measurements:
+    - Identifier: chaosMonkey
+      Method: ChaosMonkey
+      Params:
+        action: start
+        failureRate: 0.05
+        interval: 1m
+        jitterFactor: 0.2
+        simulatedDowntime: 2m
+
 - module:
     path: modules/services.yaml
     params:
@@ -196,6 +207,13 @@ steps:
       mediumJobsPerNamespace: 1
       smallJobSize: {{$SMALL_GROUP_SIZE}}
       smallJobsPerNamespace: 1
+
+- name: stop chaos monkey
+  measurements:
+    - Identifier: chaosMonkey
+      Method: ChaosMonkey
+      Params:
+        action: stop
 
 {{if not $IS_SMALL_CLUSTER}}
 # BEGIN scheduler throughput
@@ -282,6 +300,17 @@ steps:
   {{end}}
 # END scheduler throughput
 {{end}}
+
+- name: start chaos monkey
+  measurements:
+    - Identifier: chaosMonkey
+      Method: ChaosMonkey
+      Params:
+        action: start
+        failureRate: 0.05
+        interval: 1m
+        jitterFactor: 0.2
+        simulatedDowntime: 2m
 
 {{if not $IS_SMALL_CLUSTER}}
 # TODO(kubernetes/perf-tests/issues/1024): We shouldn't have a dedicated module for measuring pod-startup-latency.
@@ -375,6 +404,13 @@ steps:
       mediumServicesPerNamespace: 0
       bigServicesPerNamespace: 0
 {{end}} # not EXIT_AFTER_EXEC
+
+- name: stop chaos monkey
+  measurements:
+    - Identifier: chaosMonkey
+      Method: ChaosMonkey
+      Params:
+        action: stop
 
 - module:
     path: /modules/measurements.yaml
