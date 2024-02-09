@@ -41,6 +41,7 @@ spec:
   {{end}}
 {{end}}
     spec:
+      schedulerName: gke.io/first-fit
       hostNetwork: {{$HostNetworkMode}}
       containers:
 {{if .EnableDNSTests}}

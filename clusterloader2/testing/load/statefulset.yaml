@@ -22,6 +22,7 @@ spec:
         group: load
         name: {{.Name}}
     spec:
+      schedulerName: gke.io/first-fit
       hostNetwork: {{$HostNetworkMode}}
       containers:
       - name: {{.Name}}

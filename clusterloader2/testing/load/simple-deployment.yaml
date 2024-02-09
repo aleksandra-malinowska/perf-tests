@@ -27,6 +27,7 @@ spec:
         svc: {{.SvcName}}-{{.Index}}
 {{end}}
     spec:
+      schedulerName: gke.io/first-fit
       hostNetwork: {{$HostNetworkMode}}
       containers:
       - env:
